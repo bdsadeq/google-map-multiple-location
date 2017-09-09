@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <title>Google Map</title>
+
+        <style type="text/css">
+            body{
+                margin: 0px;
+            }
+
+            #map_wrapper {
+                height: 100%;
+            }
+
+            #map_canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+
+        <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                // Asynchronously Load the map API 
+                var script = document.createElement('script');
+                script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+                document.body.appendChild(script);
+            });
+
+            function initialize() {
+                var map;
+                var bounds = new google.maps.LatLngBounds();
+                var mapOptions = {
+                    mapTypeId: 'roadmap'
+                };
+
+                // Display a map on the page
+                map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                map.setTilt(45);
+
+                // Multiple Markers
+                var markers = [
+                    ['Bangladesh Jute Mills Ltd. Ghorashal, Palash, Narsingdi.', 23.9659481, 90.6189627], //1
+                    ['Karim Jute Mills Ltd. Demra, Dhaka', 23.7186028, 90.4958375], //2
+                    ['Latif Bawany Jute Mills Ltd. Demra, Dhaka', 23.722679, 90.4945635], //3
+                    ['UMC Jute Mills Ltd. Narsigndi', 23.9111135, 90.7123072], //4
+                    ['Rajshahi Jute Mills Ltd. Shampur, Rajshahi', 24.3677869, 88.6789842], //5
+
+                    ['Jatio Jute Mills Ltd. Raipur, Sirajganj', 24.4374116, 89.6977204], //6
+                    ['Amin Jute Mills Ltd. and Old Fields Ltd. Sholashahar, Chittagong', 22.3838492, 91.8262946], //7
+                    ['Gul Ahmed Jute Mills Ltd. Kumira, Barabkunda, Chittagong', 22.5263825, 91.7039966], //8
+                    ['Hafiz Jute Mills Ltd. Bara-aulia, Chittagong', 22.4738679, 91.7282116], //9
+                    ['M.M. Jute Mills Ltd. Bashbaria, Chittagong', 22.3819355, 91.7832603], //10
+
+                    ['R.R. Jute Mills Ltd. Bashbaria, Chittagong', 22.3819355, 91.7832603], //11
+                    ['Baghdad-Dhaka Carpet Factory Ltd. North Kattrali, Chittagong', 22.3598891, 91.7794418], //12
+                    ['KFD, Rangunia, Chittagong', 22.4565074, 92.0204168], //13
+                    ['Carpeting Jute Mills Ltd. Rajghat, Noapara, Jessore', 23.0060017, 89.4231105], //14
+                    ['Jessore Jute Industries Ltd. Rajghat, Noapara, Jessore', 23.0023872, 89.4272089], //15
+
+                    ['Eastern Jute Mill Ltd. Atra Shilpo Area, Khulna', 22.9437025, 89.4876122], //16
+                    ['Alim Jute Mill Ltd. Atra Shilpo Area, Khulna', 22.9410882, 89.4863499], //17
+                    ['The Crescent Jute Mills Ltd. Town Khalishpur, Khulna', 22.861823, 89.5425075], //18
+                    ['Platinum Jubilee Jute Mills Ltd. Town Khalishpur, Khulna', 22.860634, 89.5443873], //19
+                    ['Khalishpur Jute Mills Ltd. Town Khalishpur, Khulna', 22.8624585, 89.5397962], //20
+
+                    ['Daulatpur Jute Mills Ltd. Town Khalishpur, Khulna', 22.8600834, 89.5471025], //21
+                    ['Star Jute Mills Ltd. Chondoni Mohol, Khulna', 22.8673204, 89.5523661], //22
+                ];
+
+                // Info Window Content
+                var infoWindowContent = [
+                    ['<div class="info_content"><h3>Bangladesh Jute Mills Ltd.</h3>' +
+                                '<p>Ghorashal, Palash, Narsingdi.</p>' + '</div>'], //1
+                    ['<div class="info_content"><h3>Karim Jute Mills Ltd.</h3>' +
+                                '<p>Demra, Dhaka</p></div>'], //2
+                    ['<div class="info_content"><h3>Latif Bawany Jute Mills Ltd.</h3>' +
+                                '<p>Demra, Dhaka</p></div>'], //3
+                    ['<div class="info_content"><h3>UMC Jute Mill Ltd.</h3>' +
+                                '<p>Narsigndi</p></div>'], //4
+                    ['<div class="info_content"><h3>Rajshahi Jute Mills Ltd.</h3>' +
+                                '<p>Shampur, Rajshahi</p></div>'], //5
+
+                    ['<div class="info_content"><h3>Jatio Jute Mills Ltd.</h3>' +
+                                '<p>Raipur, Sirajganj</p></div>'], //6
+                    ['<div class="info_content"><h3>Amin Jute Mills Ltd. and Old Fields Ltd.</h3>' +
+                                '<p>Sholashahar, Chittagong</p></div>'], //7
+                    ['<div class="info_content"><h3>Gul Ahmed Jute Mills Ltd.</h3>' +
+                                '<p>Kumira, Barabkunda, Chittagong</p></div>'], //8
+                    ['<div class="info_content"><h3>Hafiz Jute Mills Ltd.</h3>' +
+                                '<p>Bara-aulia, Chittagong</p></div>'], //9
+                    ['<div class="info_content"><h3>M.M. Jute Mills Ltd.</h3>' +
+                                '<p>Bashbaria, Chittagong</p></div>'], //10
+
+                    ['<div class="info_content"><h3>R.R. Jute Mills Ltd.</h3>' +
+                                '<p>Bashbaria, Chittagong</p></div>'], //11
+                    ['<div class="info_content"><h3>Baghdad-Dhaka Carpet Factory Ltd.</h3>' +
+                                '<p>North Kattrali, Chittagong</p></div>'], //12
+                    ['<div class="info_content"><h3>KFD.</h3>' +
+                                '<p>Rangunia, Chittagong</p></div>'], //13
+                    ['<div class="info_content"><h3>Carpeting Jute Mills Ltd.</h3>' +
+                                '<p>Rajghat, Noapara, Jessore</p></div>'], //14
+                    ['<div class="info_content"><h3>Jessore Jute Industries Ltd.</h3>' +
+                                '<p>Rajghat, Noapara, Jessore</p></div>'], //15
+
+                    ['<div class="info_content"><h3>Eastern Jute Mill Ltd.</h3>' +
+                                '<p>Atra Shilpo Area, Khulna</p></div>'], //16
+                    ['<div class="info_content"><h3>Alim Jute Mill Ltd.</h3>' +
+                                '<p>Atra Shilpo Area, Khulna</p></div>'], //17
+                    ['<div class="info_content"><h3>The Crescent Jute Mills Ltd.</h3>' +
+                                '<p>Town Khalishpur, Khulna</p></div>'], //18
+                    ['<div class="info_content"><h3>Platinum Jubilee Jute Mills Ltd.</h3>' +
+                                '<p>Town Khalishpur, Khulna</p></div>'], //19
+                    ['<div class="info_content"><h3>Khalishpur Jute Mills Ltd.</h3>' +
+                                '<p>Town Khalishpur, Khulna</p></div>'], //20
+
+                    ['<div class="info_content"><h3>Daulatpur Jute Mills Ltd.</h3>' +
+                                '<p>Town Khalishpur, Khulna</p></div>'], //21
+                    ['<div class="info_content"><h3>Star Jute Mills Ltd.</h3>' +
+                                '<p>Chondoni Mohol, Khulna</p></div>'], //22
+                ];
+
+                // Display multiple markers on a map
+                var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+                // Loop through our array of markers & place each one on the map  
+                for (i = 0; i < markers.length; i++) {
+                    var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+                    bounds.extend(position);
+                    marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: markers[i][0]
+                    });
+
+                    // Allow each marker to have an info window    
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infoWindow.setContent(infoWindowContent[i][0]);
+                            infoWindow.open(map, marker);
+                        }
+                    })(marker, i));
+
+                    // Automatically center the map fitting all markers on the screen
+                    map.fitBounds(bounds);
+                }
+
+                // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+                var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+                    this.setZoom(9);
+                    google.maps.event.removeListener(boundsListener);
+                });
+
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <div id="map_wrapper">
+            <div id="map_canvas" class="mapping"></div>
+        </div>
+    </body>
+</html>
