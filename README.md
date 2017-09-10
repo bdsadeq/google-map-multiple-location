@@ -2,7 +2,7 @@
 
 
 
-###View Customization
+### View Customization
 If you need 100% view (no scroll) then use this
 ```css
     #map_wrapper {
@@ -12,7 +12,7 @@ If you need 100% view (no scroll) then use this
 
 
 
-###Label Display
+### Label Display
 If you need to display marker with label, enable this code
 ```javascript
     label: {
